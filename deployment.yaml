@@ -19,19 +19,26 @@ spec:
         runAsUser: 1000900001   # Use an allowed user ID
         fsGroup: 1000900001   # Allow access to files in the shared volume
       initContainers:
-        - name: init-nginx
-          image: busybox:1.35.0-uclibc
-          command:
-            - sh
-            - -c
-            - |
-              mkdir -p /var/cache/nginx/client_temp && chown -R nginx:nginx /var/cache/nginx
-          volumeMounts:
-            - mountPath: /var/cache/nginx
-              name: nginx-cache
+        -image: nginx:latest
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
       containers:
       - name: simple-web-app
         image: image-registry.openshift-image-registry.svc:5000/simple-web-app/simple-web-app-TAG:latest
+        securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
         ports:
         - containerPort: 8080
         volumeMounts:
