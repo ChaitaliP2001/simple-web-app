@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: simple-web-app
-        image: image-registry.openshift-image-registry.svc:5000/jenkins/simple-web-app-TAG:latest
+        image: image-registry.openshift-image-registry.svc:5000/jenkins/simple-web-app/simple-web-app-TAG:latest
         ports:
         - containerPort: 8080
         resources:
