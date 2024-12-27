@@ -27,3 +27,35 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-web-app-service
+  labels:
+    app: simple-web-app
+  namespace: simple-web-app
+spec:
+  selector:
+    app: simple-web-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: ClusterIP
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: simple-web-app-route
+  namepace: simple-web-app
+spec:
+  to:
+    kind: Service
+    name: simple-web-app  # This should match the service name
+  port:
+    targetPort: 8080  # The port your application is exposing
+  tls:
+    termination: edge  # Optional: If you want to enable HTTPS
+  wildcardPolicy: None
