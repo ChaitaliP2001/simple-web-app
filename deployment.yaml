@@ -15,11 +15,28 @@ spec:
       labels:
         app: simple-web-app
     spec:
+      securityContext:
+        runAsUser: 0    # Run the container as root
+        fsGroup: 1000   # Allow access to files in the shared volume
+      initContainers:
+        - name: init-nginx
+          image: busybox:1.35.0-uclibc
+          command:
+            - sh
+            - -c
+            - |
+              mkdir -p /var/cache/nginx/client_temp && chown -R nginx:nginx /var/cache/nginx
+          volumeMounts:
+            - mountPath: /var/cache/nginx
+              name: nginx-cache
       containers:
       - name: simple-web-app
         image: image-registry.openshift-image-registry.svc:5000/simple-web-app/simple-web-app-TAG:latest
         ports:
         - containerPort: 8080
+        volumeMounts:
+            - mountPath: /var/cache/nginx
+              name: nginx-cache
         resources:
           requests:
             memory: "64Mi"
@@ -27,6 +44,9 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+      volumes:
+        - name: nginx-cache
+          emptyDir: {}   # This creates an empty directory for nginx to write to
 ---
 apiVersion: v1
 kind: Service
