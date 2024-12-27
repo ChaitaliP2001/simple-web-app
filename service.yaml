@@ -4,6 +4,7 @@ metadata:
   name: simple-web-app-service
   labels:
     app: simple-web-app
+  namespace: simple-web-app
 spec:
   selector:
     app: simple-web-app
@@ -18,6 +19,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: simple-web-app-route
+  namepace: simple-web-app
 spec:
   to:
     kind: Service
