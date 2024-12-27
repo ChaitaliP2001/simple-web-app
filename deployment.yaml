@@ -15,20 +15,6 @@ spec:
       labels:
         app: simple-web-app
     spec:
-      securityContext:
-        runAsUser: 1000900001   # Use an allowed user ID
-        fsGroup: 1000900001   # Allow access to files in the shared volume
-      initContainers:
-        -image: nginx:latest
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-            runAsNonRoot: true
-            seccompProfile:
-              type: RuntimeDefault
-      containers:
       - name: simple-web-app
         image: image-registry.openshift-image-registry.svc:5000/simple-web-app/simple-web-app-TAG:latest
         securityContext:
