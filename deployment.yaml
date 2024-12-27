@@ -4,6 +4,7 @@ metadata:
   name: simple-web-app
   labels:
     app: simple-web-app
+  namespace: simple-web-app
 spec:
   replicas: 1
   selector:
