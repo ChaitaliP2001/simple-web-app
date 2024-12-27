@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM nginxinc/nginx-unprivileged:stable-alpine
 
 # Copy index.html into the NGINX directory
 COPY index.html /usr/share/nginx/html
