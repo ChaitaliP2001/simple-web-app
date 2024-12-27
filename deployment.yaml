@@ -15,6 +15,7 @@ spec:
       labels:
         app: simple-web-app
     spec:
+      containers:
       - name: simple-web-app
         image: image-registry.openshift-image-registry.svc:5000/simple-web-app/simple-web-app-TAG:latest
         securityContext:
