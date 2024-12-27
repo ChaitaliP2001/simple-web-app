@@ -6,7 +6,7 @@ metadata:
     app: simple-web-app
   namespace: simple-web-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: simple-web-app
@@ -16,8 +16,8 @@ spec:
         app: simple-web-app
     spec:
       securityContext:
-        runAsUser: 0    # Run the container as root
-        fsGroup: 1000   # Allow access to files in the shared volume
+        runAsUser: 1000900001   # Use an allowed user ID
+        fsGroup: 1000900001   # Allow access to files in the shared volume
       initContainers:
         - name: init-nginx
           image: busybox:1.35.0-uclibc
