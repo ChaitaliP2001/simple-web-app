@@ -12,3 +12,18 @@ spec:
     port: 80
     targetPort: 8080
   type: ClusterIP
+
+  ---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: simple-web-app-route
+spec:
+  to:
+    kind: Service
+    name: simple-web-app  # This should match the service name
+  port:
+    targetPort: 8080  # The port your application is exposing
+  tls:
+    termination: edge  # Optional: If you want to enable HTTPS
+  wildcardPolicy: None
