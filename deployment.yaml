@@ -27,7 +27,7 @@ spec:
             seccompProfile:
               type: RuntimeDefault
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         volumeMounts:
             - mountPath: /var/cache/nginx
               name: nginx-cache
@@ -54,8 +54,8 @@ spec:
     app: simple-web-app
   ports:
   - protocol: TCP
-    port: 80
-    targetPort: 81
+    port: 8080
+    targetPort: 8080
   type: ClusterIP
 
 ---
@@ -69,5 +69,5 @@ spec:
     kind: Service
     name: simple-web-app  # This should match the service name
   port:
-    targetPort: 81  # The port your application is exposing
+    targetPort: 8080  # The port your application is exposing
     wildcardPolicy: None
