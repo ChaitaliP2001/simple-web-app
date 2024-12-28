@@ -2,8 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: okd-sample-app
+  namespace: okd-sample-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: okd-sample-app
@@ -14,9 +15,9 @@ spec:
     spec:
       containers:
       - name: okd-sample-app
-        image: image-registry.openshift-image-registry.svc:5000/simple-web-ap/simple-web-app-TAG:latest
+        image: image-registry.openshift-image-registry.svc:5000/okd-sample-app/okd-sample-app-TAG:latest
         ports:
-        - containerPort: 8081
+        - containerPort: 90
 ---
 apiVersion: v1
 kind: Service
@@ -27,8 +28,8 @@ spec:
     app: okd-sample-app
   ports:
   - protocol: TCP
-    port: 8081
-    targetPort: 8081
+    port: 90
+    targetPort: 91
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
@@ -39,6 +40,6 @@ spec:
     kind: Service
     name: okd-sample-app
   port:
-    targetPort: 8081
+    targetPort: 91
   tls:
     termination: edge
