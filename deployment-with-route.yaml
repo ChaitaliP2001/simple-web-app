@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: okd-sample-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: okd-sample-app
+  template:
+    metadata:
+      labels:
+        app: okd-sample-app
+    spec:
+      containers:
+      - name: okd-sample-app
+        image: <your-registry>/okd-sample-app:1.0.0
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: okd-sample-app
+spec:
+  selector:
+    app: okd-sample-app
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: okd-sample-app
+spec:
+  to:
+    kind: Service
+    name: okd-sample-app
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
