@@ -70,6 +70,4 @@ spec:
     name: simple-web-app  # This should match the service name
   port:
     targetPort: 81  # The port your application is exposing
-  tls:
-    termination: edge  # Optional: If you want to enable HTTPS
-  wildcardPolicy: None
+    wildcardPolicy: None
