@@ -62,11 +62,11 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: simple-web-app-route
-  namepace: simple-web-app-service
+  namepace: simple-web-app
 spec:
   to:
     kind: Service
-    name: simple-web-app  # This should match the service name
+    name: simple-web-app-service  # This should match the service name
   port:
     targetPort: 8080  # The port your application is exposing
     wildcardPolicy: None
